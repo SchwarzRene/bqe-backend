@@ -77,10 +77,16 @@ nothing worth stealing.
 They are still kept as secrets rather than variables, because there is no
 reason to publish your subscription layout.
 
-### `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` — GitHub Actions secrets, `bqe-frontend`
+### Cloudflare — no secret at all
 
-See `bqe-frontend/docs/DEPLOYMENT.md`. Same idea: a token scoped to
-"Cloudflare Pages: Edit" on one account, and nothing more.
+`bqe-frontend` deploys through Cloudflare's Git connection, not through a
+GitHub Action, so there is no API token and no repository secret on that side.
+Cloudflare pulls from GitHub itself via its GitHub App.
+
+This is the pattern to prefer wherever it is available: a credential that does
+not exist cannot leak, cannot expire, and cannot be forgotten about. It is the
+same reasoning behind using workload identity federation for Azure rather than
+a stored password.
 
 ## Runtime configuration vs secrets
 
